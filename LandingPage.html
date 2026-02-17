@@ -1,0 +1,1792 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mercier &amp; Associés — Cabinet d'Expertise Comptable à Paris</title>
+  <meta name="description" content="Cabinet d'expertise comptable fondé en 2009. Comptabilité, fiscalité, paie et conseil pour TPE, PME et professions libérales à Paris.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ══════════════════════════════════════════════════
+       RESET & CSS VARIABLES
+    ══════════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:          #0D1B2A;
+      --navy2:         #1A2E44;
+      --gold:          #C9A84C;
+      --gold2:         #E8C97A;
+      --cream:         #F5F1EA;
+      --fog:           #EAE6DF;
+      --ink:           #1C1C1E;
+      --muted:         #6B7280;
+      --white:         #FFFFFF;
+      --nav-h:         72px;
+      --font-display:  'Playfair Display', serif;
+      --font-body:     'Outfit', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--cream);
+      color: var(--ink);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    h1,h2,h3,h4 { font-family: var(--font-display); line-height: 1.15; }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--fog); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+    /* ══════════════════════════════════════════════════
+       ██  NAVBAR IMMERSIVE  ██
+    ══════════════════════════════════════════════════ */
+
+    /* ── Barre de progression scroll ── */
+    #scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--gold), var(--gold2), var(--gold));
+      z-index: 9999;
+      transition: width 0.1s linear;
+      box-shadow: 0 0 8px rgba(201,168,76,.6);
+    }
+
+    /* ── Navbar wrapper ── */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      z-index: 1000;
+      transition: all 0.4s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* État transparent (au-dessus du hero) */
+    #navbar.transparent {
+      background: transparent;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+
+    /* État flouté (après scroll) */
+    #navbar.scrolled {
+      background: rgba(13, 27, 42, 0.88);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border-bottom: 1px solid rgba(201,168,76,.18);
+      box-shadow: 0 8px 32px rgba(0,0,0,.25);
+    }
+
+    /* ── Contenu interne navbar ── */
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    /* ── Logo ── */
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .nav-logo-mark {
+      width: 38px; height: 38px;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display);
+      font-size: 1.25rem; font-weight: 900;
+      color: var(--navy);
+      transition: transform 0.3s ease;
+    }
+
+    .nav-logo:hover .nav-logo-mark { transform: rotate(-5deg) scale(1.05); }
+
+    .nav-logo-text { display: flex; flex-direction: column; }
+
+    .nav-logo-text strong {
+      font-family: var(--font-display);
+      font-size: 1rem; font-weight: 700;
+      color: var(--white);
+      line-height: 1;
+      letter-spacing: 0.01em;
+    }
+
+    .nav-logo-text span {
+      font-size: 0.6rem; font-weight: 400;
+      color: rgba(255,255,255,.4);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+
+    /* ── Navigation links centraux ── */
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      list-style: none;
+    }
+
+    .nav-item { position: relative; }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.5rem 0.85rem;
+      border-radius: 8px;
+      color: rgba(255,255,255,.7);
+      text-decoration: none;
+      font-size: 0.855rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .nav-link:hover { color: var(--white); background: rgba(255,255,255,.07); }
+
+    /* Lien actif */
+    .nav-link.active {
+      color: var(--gold2);
+    }
+
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 50%;
+      transform: translateX(-50%);
+      width: 20px; height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--gold2));
+      border-radius: 2px;
+    }
+
+    /* Chevron pour les items avec dropdown */
+    .nav-chevron {
+      width: 14px; height: 14px;
+      opacity: .5;
+      transition: transform 0.25s ease, opacity 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .nav-item:hover .nav-chevron,
+    .nav-item.open .nav-chevron {
+      transform: rotate(180deg);
+      opacity: 1;
+    }
+
+    /* ── Indicator pill de section ── */
+    .nav-section-pill {
+      position: absolute;
+      top: 50%; right: -0.5rem;
+      transform: translateY(-50%);
+      background: rgba(201,168,76,.15);
+      border: 1px solid rgba(201,168,76,.3);
+      border-radius: 20px;
+      padding: 0.08rem 0.45rem;
+      font-size: 0.58rem;
+      font-weight: 700;
+      color: var(--gold2);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .nav-link.active .nav-section-pill { opacity: 1; }
+
+    /* ══════════════════════════════════════════════════
+       MEGA-MENU (dropdown immersif)
+    ══════════════════════════════════════════════════ */
+    .mega-menu {
+      position: absolute;
+      top: calc(100% + 12px);
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(.4,0,.2,1);
+      min-width: 540px;
+      z-index: 100;
+    }
+
+    /* Mega-menu droite (pour éviter débordement) */
+    .mega-menu.align-right {
+      left: auto;
+      right: 0;
+      transform: translateX(0) translateY(10px);
+    }
+
+    .nav-item:hover .mega-menu,
+    .nav-item.open .mega-menu {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .nav-item:hover .mega-menu.align-right,
+    .nav-item.open .mega-menu.align-right {
+      transform: translateX(0) translateY(0);
+    }
+
+    .mega-menu-inner {
+      background: rgba(10, 22, 36, 0.97);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(201,168,76,.15);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow:
+        0 24px 60px rgba(0,0,0,.45),
+        0 0 0 1px rgba(255,255,255,.04) inset;
+    }
+
+    /* En-tête du mega-menu */
+    .mega-header {
+      padding: 1.4rem 1.8rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .mega-header-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+    }
+
+    .mega-header-count {
+      font-size: 0.65rem;
+      color: rgba(255,255,255,.25);
+    }
+
+    /* Grille de liens du mega-menu */
+    .mega-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+      padding: 0.75rem;
+    }
+
+    .mega-link {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      padding: 0.9rem 1rem;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.2s ease;
+    }
+
+    .mega-link:hover { background: rgba(255,255,255,.05); }
+
+    .mega-link-icon {
+      width: 36px; height: 36px;
+      background: rgba(201,168,76,.1);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+      transition: background 0.2s ease;
+    }
+
+    .mega-link:hover .mega-link-icon { background: rgba(201,168,76,.2); }
+
+    .mega-link-text strong {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.2rem;
+    }
+
+    .mega-link-text span {
+      font-size: 0.73rem;
+      color: rgba(255,255,255,.38);
+      line-height: 1.4;
+    }
+
+    /* Footer du mega-menu */
+    .mega-footer {
+      padding: 1rem 1.8rem;
+      border-top: 1px solid rgba(255,255,255,.06);
+      background: rgba(255,255,255,.02);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .mega-footer p { font-size: 0.72rem; color: rgba(255,255,255,.3); }
+
+    .mega-footer a {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--gold2);
+      text-decoration: none;
+      display: flex; align-items: center; gap: 0.3rem;
+      transition: gap 0.2s ease;
+    }
+
+    .mega-footer a:hover { gap: 0.5rem; }
+
+    /* Petit dropdown simple */
+    .mini-menu {
+      position: absolute;
+      top: calc(100% + 12px);
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(.4,0,.2,1);
+      min-width: 200px;
+      z-index: 100;
+    }
+
+    .nav-item:hover .mini-menu,
+    .nav-item.open .mini-menu {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .mini-menu-inner {
+      background: rgba(10,22,36,.97);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(201,168,76,.15);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 16px 40px rgba(0,0,0,.4);
+      padding: 0.5rem;
+    }
+
+    .mini-link {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.65rem 0.9rem;
+      border-radius: 8px;
+      text-decoration: none;
+      color: rgba(255,255,255,.65);
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .mini-link:hover { background: rgba(255,255,255,.07); color: var(--white); }
+
+    .mini-link-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    /* ── Right side de la navbar ── */
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .nav-tel {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: rgba(255,255,255,.5);
+      text-decoration: none;
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,.1);
+      transition: all 0.2s ease;
+    }
+
+    .nav-tel:hover { color: var(--white); border-color: rgba(255,255,255,.25); background: rgba(255,255,255,.05); }
+
+    .nav-tel-icon { font-size: 0.8rem; }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: var(--navy);
+      font-weight: 700;
+      font-size: 0.82rem;
+      padding: 0.6rem 1.3rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 10px rgba(201,168,76,.2);
+      white-space: nowrap;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(201,168,76,.35);
+    }
+
+    /* ── Indicateurs de section (dots) ── */
+    .nav-sections-track {
+      position: fixed;
+      right: 1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      z-index: 900;
+    }
+
+    .nav-dot {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.5rem;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .nav-dot-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: rgba(255,255,255,.4);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0;
+      transform: translateX(6px);
+      transition: all 0.25s ease;
+      white-space: nowrap;
+      background: rgba(13,27,42,.8);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+    }
+
+    .nav-dot:hover .nav-dot-label,
+    .nav-dot.active .nav-dot-label { opacity: 1; transform: translateX(0); }
+
+    .nav-dot-pip {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.25);
+      transition: all 0.3s ease;
+      border: 1.5px solid rgba(255,255,255,.2);
+      flex-shrink: 0;
+    }
+
+    .nav-dot.active .nav-dot-pip {
+      background: var(--gold);
+      border-color: var(--gold2);
+      box-shadow: 0 0 0 3px rgba(201,168,76,.2);
+      width: 10px; height: 10px;
+    }
+
+    .nav-dot:hover .nav-dot-pip {
+      background: rgba(255,255,255,.6);
+      border-color: var(--white);
+    }
+
+    /* ── Hamburger mobile ── */
+    #burger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      padding: 0.5rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    #burger span {
+      display: block;
+      width: 22px; height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    #burger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    #burger.open span:nth-child(2) { opacity: 0; width: 14px; }
+    #burger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    /* ── Menu mobile ── */
+    #mobile-menu {
+      position: fixed;
+      top: var(--nav-h);
+      left: 0; right: 0;
+      background: rgba(10,22,36,.98);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(201,168,76,.15);
+      z-index: 999;
+      transform: translateY(-100%);
+      opacity: 0;
+      transition: all 0.35s cubic-bezier(.77,0,.175,1);
+      pointer-events: none;
+      max-height: calc(100vh - var(--nav-h));
+      overflow-y: auto;
+    }
+
+    #mobile-menu.open { transform: translateY(0); opacity: 1; pointer-events: all; }
+
+    .mobile-nav-links { padding: 1rem 1.5rem; }
+
+    .mobile-section-label {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: rgba(255,255,255,.25);
+      padding: 1rem 0 0.4rem;
+    }
+
+    .mobile-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+      text-decoration: none;
+      color: rgba(255,255,255,.7);
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .mobile-link:hover { color: var(--gold2); }
+
+    .mobile-link-icon {
+      width: 32px; height: 32px;
+      background: rgba(255,255,255,.06);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    .mobile-footer {
+      padding: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+
+    /* ══════════════════════════════════════════════════
+       LAYOUT PRINCIPAL
+    ══════════════════════════════════════════════════ */
+    #main { padding-top: var(--nav-h); }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 2.5rem; }
+    .section { padding: 6rem 0; }
+
+    /* ══════════════════════════════════════════════════
+       UTILITIES & DESIGN TOKENS
+    ══════════════════════════════════════════════════ */
+    .tag {
+      display: inline-block;
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,.35);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      margin-bottom: 1.2rem;
+    }
+
+    .gold-line {
+      width: 56px; height: 3px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── Boutons ── */
+    .btn-gold {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: var(--navy); font-weight: 700; font-size: 0.9rem;
+      padding: 0.85rem 2rem; border-radius: 8px;
+      text-decoration: none; transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(201,168,76,.25);
+    }
+    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(201,168,76,.35); }
+
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: transparent; color: var(--navy);
+      font-weight: 600; font-size: 0.9rem;
+      padding: 0.82rem 1.8rem; border-radius: 8px;
+      border: 1.5px solid var(--navy); text-decoration: none; transition: all 0.3s ease;
+    }
+    .btn-outline:hover { background: var(--navy); color: var(--white); }
+
+    .btn-outline-white {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: transparent; color: var(--white);
+      font-weight: 600; font-size: 0.9rem;
+      padding: 0.82rem 1.8rem; border-radius: 8px;
+      border: 1.5px solid rgba(255,255,255,.4); text-decoration: none; transition: all 0.3s ease;
+    }
+    .btn-outline-white:hover { background: rgba(255,255,255,.1); border-color: var(--white); }
+
+    /* ══════════════════════════════════════════════════
+       HERO
+    ══════════════════════════════════════════════════ */
+    #hero {
+      background: linear-gradient(150deg, var(--navy) 0%, var(--navy2) 60%, #0e2438 100%);
+      padding: 6rem 0 6rem;
+      position: relative; overflow: hidden;
+      /* héro commence juste sous la navbar fixe */
+      margin-top: calc(-1 * var(--nav-h));
+      padding-top: calc(var(--nav-h) + 5rem);
+    }
+
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(ellipse at 10% 80%, rgba(201,168,76,.12) 0%, transparent 55%),
+        radial-gradient(ellipse at 90% 20%, rgba(201,168,76,.07) 0%, transparent 50%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 4rem; align-items: center; position: relative;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(201,168,76,.12);
+      border: 1px solid rgba(201,168,76,.3);
+      border-radius: 20px; padding: 0.3rem 0.9rem;
+      font-size: 0.75rem; color: var(--gold2); font-weight: 500;
+      margin-bottom: 1.5rem;
+    }
+    .hero-badge::before {
+      content: ''; width: 7px; height: 7px;
+      background: var(--gold2); border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50% { opacity: .5; transform: scale(1.3); }
+    }
+
+    #hero h2 { font-size: 3.6rem; color: var(--white); margin-bottom: 1.5rem; font-weight: 700; }
+    #hero h2 em { font-style: italic; color: var(--gold2); }
+    #hero > .container > .hero-grid > div > p {
+      font-size: 1.08rem; color: rgba(255,255,255,.65);
+      max-width: 480px; margin-bottom: 2.5rem;
+    }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .hero-card {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px; padding: 2rem;
+      display: flex; flex-direction: column; gap: 1.2rem;
+    }
+    .hero-stat {
+      background: rgba(255,255,255,.06);
+      border-radius: 12px; padding: 1rem 1.2rem;
+    }
+    .hero-stat .number {
+      font-family: var(--font-display);
+      font-size: 2.2rem; font-weight: 700; color: var(--gold2); line-height: 1;
+    }
+    .hero-stat .label { font-size: 0.78rem; color: rgba(255,255,255,.5); margin-top: 2px; }
+
+    .hero-expert {
+      display: flex; align-items: center; gap: 0.8rem;
+      padding-top: 0.5rem; border-top: 1px solid rgba(255,255,255,.1);
+    }
+    .hero-expert-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-weight: 700; font-size: 1rem; color: var(--navy);
+    }
+    .hero-expert-info strong { display: block; font-size: 0.85rem; color: var(--white); }
+    .hero-expert-info span { font-size: 0.72rem; color: rgba(255,255,255,.45); }
+    .hero-expert .stars { color: var(--gold2); font-size: 0.7rem; }
+
+    /* ══════════════════════════════════════════════════
+       TRUST BAR
+    ══════════════════════════════════════════════════ */
+    #trust {
+      background: var(--white);
+      border-bottom: 1px solid var(--fog);
+      padding: 1.5rem 0;
+    }
+    .trust-inner {
+      display: flex; align-items: center; justify-content: center;
+      gap: 3rem; flex-wrap: wrap;
+    }
+    .trust-item {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: 0.82rem; color: var(--muted); font-weight: 500;
+    }
+    .trust-item svg { color: var(--gold); }
+
+    /* ══════════════════════════════════════════════════
+       ABOUT
+    ══════════════════════════════════════════════════ */
+    #about { background: var(--white); }
+
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+
+    .about-main-img {
+      width: 100%; aspect-ratio: 4/5;
+      background: linear-gradient(160deg, var(--navy) 0%, var(--navy2) 100%);
+      border-radius: 20px; overflow: hidden; position: relative;
+    }
+    .about-main-img::after {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(circle at 30% 70%, rgba(201,168,76,.2), transparent 60%);
+    }
+    .about-img-content {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      justify-content: flex-end; padding: 2rem;
+    }
+    .about-img-caption {
+      background: rgba(255,255,255,.08);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 12px; padding: 1rem 1.2rem;
+    }
+    .about-img-caption strong { display: block; color: var(--white); font-size: 0.95rem; }
+    .about-img-caption span { font-size: 0.75rem; color: rgba(255,255,255,.5); }
+
+    .about-float-card {
+      position: absolute; bottom: -2rem; left: -2rem;
+      background: var(--white); border-radius: 14px;
+      padding: 1rem 1.4rem;
+      box-shadow: 0 8px 30px rgba(0,0,0,.12);
+      border: 1px solid var(--fog);
+    }
+    .about-float-card .num {
+      font-family: var(--font-display);
+      font-size: 2rem; font-weight: 700; color: var(--navy);
+    }
+    .about-float-card .txt { font-size: 0.78rem; color: var(--muted); }
+
+    .value-item {
+      display: flex; gap: 1rem; padding: 1.2rem;
+      border-radius: 12px; transition: background 0.2s ease; margin-bottom: 0.5rem;
+    }
+    .value-item:hover { background: var(--cream); }
+    .value-icon {
+      width: 44px; height: 44px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--navy), var(--navy2));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; flex-shrink: 0;
+    }
+    .value-item h4 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.2rem; }
+    .value-item p { font-size: 0.85rem; color: var(--muted); }
+
+    /* ══════════════════════════════════════════════════
+       SERVICES
+    ══════════════════════════════════════════════════ */
+    #services { background: var(--cream); }
+
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+    .service-card {
+      background: var(--white); border-radius: 18px;
+      padding: 2rem; border: 1px solid var(--fog);
+      transition: all 0.35s cubic-bezier(.4,0,.2,1);
+      position: relative; overflow: hidden;
+    }
+    .service-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold2));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.35s ease;
+    }
+    .service-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,.08); }
+    .service-card:hover::before { transform: scaleX(1); }
+
+    .service-number {
+      font-family: var(--font-display);
+      font-size: 3rem; font-weight: 900;
+      color: rgba(13,27,42,.06); line-height: 1; margin-bottom: 0.5rem;
+    }
+    .service-icon-wrap {
+      width: 52px; height: 52px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--navy), var(--navy2));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; margin-bottom: 1rem;
+    }
+    .service-card h3 { font-size: 1.2rem; font-weight: 700; color: var(--navy); margin-bottom: 0.6rem; }
+    .service-card p { font-size: 0.85rem; color: var(--muted); margin-bottom: 1rem; }
+
+    .service-list { list-style: none; }
+    .service-list li {
+      font-size: 0.82rem; color: var(--ink);
+      padding: 0.3rem 0; border-bottom: 1px solid var(--fog);
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .service-list li::before { content: '→'; color: var(--gold); font-size: 0.75rem; }
+
+    /* ══════════════════════════════════════════════════
+       TEAM
+    ══════════════════════════════════════════════════ */
+    #team { background: var(--white); }
+
+    .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+
+    .team-card {
+      background: var(--cream); border-radius: 18px;
+      overflow: hidden; transition: transform 0.3s ease;
+    }
+    .team-card:hover { transform: translateY(-5px); }
+
+    .team-avatar {
+      aspect-ratio: 1;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display);
+      font-size: 2.5rem; font-weight: 700; color: var(--white);
+    }
+    .team-body { padding: 1.2rem; }
+    .team-body h4 { font-size: 1rem; font-weight: 700; color: var(--navy); }
+    .team-body .role { font-size: 0.75rem; color: var(--gold); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+    .team-body p { font-size: 0.8rem; color: var(--muted); }
+    .team-body .expertise { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.8rem; }
+    .team-body .expertise span {
+      background: var(--white); border: 1px solid var(--fog);
+      border-radius: 4px; padding: 0.15rem 0.5rem;
+      font-size: 0.68rem; color: var(--navy); font-weight: 500;
+    }
+
+    /* ══════════════════════════════════════════════════
+       TARIFS
+    ══════════════════════════════════════════════════ */
+    #tarifs { background: var(--cream); }
+
+    .tarifs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; align-items: start; }
+
+    .tarif-card {
+      background: var(--white); border-radius: 20px;
+      border: 1.5px solid var(--fog); overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .tarif-card:hover { box-shadow: 0 12px 35px rgba(0,0,0,.08); transform: translateY(-4px); }
+    .tarif-card.featured {
+      border-color: var(--gold); box-shadow: 0 8px 30px rgba(201,168,76,.2); transform: scale(1.02);
+    }
+    .tarif-card.featured:hover { transform: scale(1.02) translateY(-4px); }
+
+    .tarif-header { padding: 2rem 2rem 1.5rem; background: var(--navy); position: relative; }
+    .tarif-card.featured .tarif-header { background: linear-gradient(135deg, var(--navy), #1a3a5c); }
+    .tarif-badge {
+      position: absolute; top: -1px; right: 1.5rem;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: var(--navy); font-size: 0.65rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      padding: 0.25rem 0.75rem; border-radius: 0 0 8px 8px;
+    }
+    .tarif-header h3 { font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 0.4rem; }
+    .tarif-header p { font-size: 0.8rem; color: rgba(255,255,255,.5); }
+
+    .tarif-price {
+      padding: 1.5rem 2rem; border-bottom: 1px solid var(--fog);
+      display: flex; align-items: baseline; gap: 0.4rem;
+    }
+    .tarif-price .amount { font-family: var(--font-display); font-size: 2.8rem; font-weight: 700; color: var(--navy); }
+    .tarif-price .period { font-size: 0.82rem; color: var(--muted); }
+    .tarif-price .note { font-size: 0.72rem; color: var(--muted); display: block; margin-top: 0.25rem; }
+
+    .tarif-features { padding: 1.5rem 2rem; }
+    .tarif-feature {
+      display: flex; align-items: flex-start; gap: 0.6rem;
+      padding: 0.5rem 0; font-size: 0.85rem; color: var(--ink);
+    }
+    .tarif-feature .check {
+      width: 18px; height: 18px; border-radius: 50%;
+      background: rgba(16,185,129,.12); color: #10b981;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.6rem; flex-shrink: 0; margin-top: 2px;
+    }
+    .tarif-feature .cross {
+      width: 18px; height: 18px; border-radius: 50%;
+      background: rgba(107,114,128,.08); color: rgba(107,114,128,.4);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.6rem; flex-shrink: 0; margin-top: 2px;
+    }
+    .tarif-feature.muted { opacity: .45; }
+    .tarif-footer { padding: 0 2rem 2rem; }
+
+    /* ══════════════════════════════════════════════════
+       PROCESS
+    ══════════════════════════════════════════════════ */
+    #process { background: var(--navy); overflow: hidden; }
+    .process-head h2 { color: var(--white); }
+    .process-head p { color: rgba(255,255,255,.55); }
+
+    .process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
+    .process-steps::before {
+      content: ''; position: absolute;
+      top: 28px; left: 10%; width: 80%; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,.4), transparent);
+    }
+    .process-step { text-align: center; padding: 0 1rem; }
+    .process-step-num {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; color: var(--navy);
+      margin: 0 auto 1.5rem; position: relative; z-index: 1;
+      box-shadow: 0 0 0 6px rgba(201,168,76,.15);
+    }
+    .process-step h4 { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 0.6rem; }
+    .process-step p { font-size: 0.82rem; color: rgba(255,255,255,.45); }
+
+    /* ══════════════════════════════════════════════════
+       FAQ
+    ══════════════════════════════════════════════════ */
+    #faq { background: var(--white); }
+    .faq-grid { display: grid; grid-template-columns: 340px 1fr; gap: 5rem; }
+    .faq-sidebar h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+    .faq-sidebar p { font-size: 0.9rem; color: var(--muted); margin-bottom: 2rem; }
+
+    details { border-bottom: 1px solid var(--fog); }
+    summary {
+      list-style: none;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 0; font-weight: 600; font-size: 0.95rem;
+      color: var(--navy); cursor: pointer; gap: 1rem;
+    }
+    summary::-webkit-details-marker { display: none; }
+    .faq-icon {
+      width: 24px; height: 24px; border-radius: 50%;
+      border: 1.5px solid var(--navy);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; font-size: 0.8rem; transition: all 0.3s ease;
+    }
+    details[open] summary .faq-icon { background: var(--gold); border-color: var(--gold); transform: rotate(45deg); }
+    details[open] summary { color: var(--gold); }
+    .faq-answer { padding: 0 0 1.2rem; font-size: 0.87rem; color: var(--muted); line-height: 1.7; }
+
+    /* ══════════════════════════════════════════════════
+       CTA
+    ══════════════════════════════════════════════════ */
+    #cta {
+      background: linear-gradient(135deg, var(--navy) 0%, #0e2438 100%);
+      position: relative; overflow: hidden;
+    }
+    #cta::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 20% 50%, rgba(201,168,76,.12), transparent 60%);
+    }
+    .cta-inner {
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 3rem; align-items: center; position: relative;
+    }
+    .cta-inner h2 { font-size: 2.6rem; color: var(--white); margin-bottom: 0.8rem; }
+    .cta-inner h2 em { font-style: italic; color: var(--gold2); }
+    .cta-inner p { font-size: 1rem; color: rgba(255,255,255,.55); max-width: 500px; }
+
+    .cta-box {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 20px; padding: 2rem; min-width: 260px; text-align: center;
+    }
+    .cta-box p { font-size: 0.8rem; color: rgba(255,255,255,.5); margin-bottom: 0.3rem; }
+    .cta-box .phone { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--gold2); margin-bottom: 1rem; }
+
+    /* ══════════════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════════════ */
+    #footer { background: #07111a; color: rgba(255,255,255,.45); }
+    .footer-main {
+      padding: 4rem 0 2.5rem;
+      display: grid; grid-template-columns: 280px 1fr 1fr 1fr; gap: 3rem;
+    }
+    .footer-brand h2 { font-size: 1.2rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
+    .footer-brand p { font-size: 0.8rem; line-height: 1.7; margin-bottom: 1.5rem; }
+    .footer-orias {
+      background: rgba(255,255,255,.05); border-radius: 8px;
+      padding: 0.7rem 1rem; font-size: 0.72rem;
+    }
+    .footer-col h4 {
+      font-family: var(--font-body);
+      font-size: 0.72rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.15em;
+      color: rgba(255,255,255,.3); margin-bottom: 1rem;
+    }
+    .footer-col a {
+      display: block; font-size: 0.83rem;
+      color: rgba(255,255,255,.5); text-decoration: none;
+      margin-bottom: 0.5rem; transition: color 0.2s;
+    }
+    .footer-col a:hover { color: var(--gold2); }
+    .footer-bottom {
+      padding: 1.5rem 0;
+      border-top: 1px solid rgba(255,255,255,.06);
+      display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem;
+    }
+    .footer-bottom a { color: inherit; text-decoration: none; }
+    .footer-bottom a:hover { color: var(--gold2); }
+    .footer-demo-badge {
+      background: rgba(201,168,76,.12); border: 1px solid rgba(201,168,76,.25);
+      color: var(--gold2); padding: 0.25rem 0.75rem; border-radius: 4px;
+      font-size: 0.7rem; font-weight: 600;
+    }
+
+    /* ══════════════════════════════════════════════════
+       ANIMATIONS
+    ══════════════════════════════════════════════════ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fadeUp 0.7s ease-out forwards; }
+    .delay-1 { animation-delay: 0.15s; opacity: 0; }
+    .delay-2 { animation-delay: 0.3s;  opacity: 0; }
+    .delay-3 { animation-delay: 0.45s; opacity: 0; }
+
+    /* ══════════════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-card { display: none; }
+      #hero h2 { font-size: 2.8rem; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .team-grid { grid-template-columns: 1fr 1fr; }
+      .tarifs-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+      .tarif-card.featured { transform: none; }
+      .process-steps { grid-template-columns: 1fr 1fr; gap: 2rem; }
+      .process-steps::before { display: none; }
+      .footer-main { grid-template-columns: 1fr 1fr; }
+      .nav-sections-track { display: none; }
+      /* cacher les méga-menus intermédiaires sur tablette */
+      .nav-links .nav-item:nth-child(n+4) { display: none; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-tel { display: none; }
+      #burger { display: flex; }
+      .about-grid, .faq-grid, .cta-inner { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+      .container { padding: 0 1.5rem; }
+      #hero h2 { font-size: 2rem; }
+      .footer-main { grid-template-columns: 1fr; }
+      .nav-sections-track { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+     BARRE DE PROGRESSION SCROLL
+════════════════════════════════════════ -->
+<div id="scroll-progress"></div>
+
+<!-- ════════════════════════════════════════
+     NAVBAR IMMERSIVE
+════════════════════════════════════════ -->
+<nav id="navbar" class="transparent">
+  <div class="nav-inner">
+
+    <!-- Logo -->
+    <a href="#hero" class="nav-logo">
+      <div class="nav-logo-mark">M</div>
+      <div class="nav-logo-text">
+        <strong>Mercier &amp; Associés</strong>
+        <span>Cabinet Comptable · Paris</span>
+      </div>
+    </a>
+
+    <!-- Liens de navigation avec mega-menus -->
+    <ul class="nav-links">
+
+      <!-- Accueil (simple) -->
+      <li class="nav-item">
+        <a href="#hero" class="nav-link active" data-section="hero">Accueil</a>
+      </li>
+
+      <!-- Le Cabinet (mega-menu) -->
+      <li class="nav-item">
+        <a href="#about" class="nav-link" data-section="about">
+          Le Cabinet
+          <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+        <div class="mega-menu">
+          <div class="mega-menu-inner">
+            <div class="mega-header">
+              <span class="mega-header-label">Le Cabinet</span>
+              <span class="mega-header-count">Notre histoire &amp; équipe</span>
+            </div>
+            <div class="mega-grid">
+              <a href="#about" class="mega-link">
+                <div class="mega-link-icon">🏛️</div>
+                <div class="mega-link-text">
+                  <strong>Notre histoire</strong>
+                  <span>Fondé en 2009, 15 ans d'expertise à Paris</span>
+                </div>
+              </a>
+              <a href="#team" class="mega-link">
+                <div class="mega-link-icon">👥</div>
+                <div class="mega-link-text">
+                  <strong>L'équipe</strong>
+                  <span>8 experts comptables dédiés</span>
+                </div>
+              </a>
+              <a href="#process" class="mega-link">
+                <div class="mega-link-icon">🔄</div>
+                <div class="mega-link-text">
+                  <strong>Notre méthode</strong>
+                  <span>Processus clair en 4 étapes</span>
+                </div>
+              </a>
+              <a href="#cta" class="mega-link">
+                <div class="mega-link-icon">📞</div>
+                <div class="mega-link-text">
+                  <strong>Nous rejoindre</strong>
+                  <span>Carrières &amp; recrutement</span>
+                </div>
+              </a>
+            </div>
+            <div class="mega-footer">
+              <p>Cabinet certifié · Paris 2ème</p>
+              <a href="#about">Découvrir →</a>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- Services (mega-menu large) -->
+      <li class="nav-item">
+        <a href="#services" class="nav-link" data-section="services">
+          Services
+          <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+        <div class="mega-menu" style="min-width:600px;">
+          <div class="mega-menu-inner">
+            <div class="mega-header">
+              <span class="mega-header-label">Nos prestations</span>
+              <span class="mega-header-count">6 domaines d'expertise</span>
+            </div>
+            <div class="mega-grid" style="grid-template-columns: repeat(3,1fr);">
+              <a href="#services" class="mega-link">
+                <div class="mega-link-icon">📒</div>
+                <div class="mega-link-text">
+                  <strong>Comptabilité</strong>
+                  <span>Tenue, bilan, liasse fiscale</span>
+                </div>
+              </a>
+              <a href="#services" class="mega-link">
+                <div class="mega-link-icon">📊</div>
+                <div class="mega-link-text">
+                  <strong>Fiscalité</strong>
+                  <span>Optimisation, IS, IR, TVA</span>
+                </div>
+              </a>
+              <a href="#services" class="mega-link">
+                <div class="mega-link-icon">👥</div>
+                <div class="mega-link-text">
+                  <strong>Paie &amp; Social</strong>
+                  <span>Bulletins, DSN, droit social</span>
+                </div>
+              </a>
+              <a href="#services" class="mega-link">
+                <div class="mega-link-icon">🏗️</div>
+                <div class="mega-link-text">
+                  <strong>Création</strong>
+                  <span>Immatriculation, statuts, BP</span>
+                </div>
+              </a>
+              <a href="#services" class="mega-link">
+                <div class="mega-link-icon">📈</div>
+                <div class="mega-link-text">
+                  <strong>Pilotage</strong>
+                  <span>Tableaux de bord, prévisionnel</span>
+                </div>
+              </a>
+              <a href="#services" class="mega-link">
+                <div class="mega-link-icon">⚖️</div>
+                <div class="mega-link-text">
+                  <strong>Audit</strong>
+                  <span>Commissariat, due diligence</span>
+                </div>
+              </a>
+            </div>
+            <div class="mega-footer">
+              <p>Tous secteurs · TPE, PME, professions libérales</p>
+              <a href="#services">Voir tous les services →</a>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- Tarifs (mini-menu) -->
+      <li class="nav-item">
+        <a href="#tarifs" class="nav-link" data-section="tarifs">
+          Tarifs
+          <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+        <div class="mini-menu">
+          <div class="mini-menu-inner">
+            <a href="#tarifs" class="mini-link">
+              <span class="mini-link-dot"></span>
+              Forfait Essentiel — 90€/mois
+            </a>
+            <a href="#tarifs" class="mini-link">
+              <span class="mini-link-dot" style="background:var(--gold2);"></span>
+              Forfait Pro — 240€/mois ⭐
+            </a>
+            <a href="#tarifs" class="mini-link">
+              <span class="mini-link-dot" style="background:#a78bfa;"></span>
+              Forfait Premium — 490€/mois
+            </a>
+            <a href="#cta" class="mini-link" style="margin-top:.3rem;border-top:1px solid rgba(255,255,255,.06);padding-top:.8rem;">
+              <span class="mini-link-dot" style="background:transparent;border:1px solid rgba(255,255,255,.3);"></span>
+              Devis personnalisé gratuit
+            </a>
+          </div>
+        </div>
+      </li>
+
+      <!-- FAQ (simple) -->
+      <li class="nav-item">
+        <a href="#faq" class="nav-link" data-section="faq">FAQ</a>
+      </li>
+
+    </ul>
+
+    <!-- Côté droit -->
+    <div class="nav-right">
+      <a href="tel:0143526100" class="nav-tel">
+        <span class="nav-tel-icon">📞</span>
+        01 43 52 61 00
+      </a>
+      <a href="#cta" class="nav-cta">
+        RDV gratuit ↗
+      </a>
+      <!-- Burger mobile -->
+      <button id="burger" onclick="toggleMobile()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════
+     MENU MOBILE
+════════════════════════════════════════ -->
+<div id="mobile-menu">
+  <div class="mobile-nav-links">
+    <p class="mobile-section-label">Navigation</p>
+    <a href="#hero" class="mobile-link" onclick="toggleMobile()"><span class="mobile-link-icon">🏠</span>Accueil</a>
+    <a href="#about" class="mobile-link" onclick="toggleMobile()"><span class="mobile-link-icon">🏛️</span>Le Cabinet</a>
+    <a href="#services" class="mobile-link" onclick="toggleMobile()"><span class="mobile-link-icon">📋</span>Services</a>
+    <a href="#team" class="mobile-link" onclick="toggleMobile()"><span class="mobile-link-icon">👥</span>Notre Équipe</a>
+    <p class="mobile-section-label">Infos pratiques</p>
+    <a href="#tarifs" class="mobile-link" onclick="toggleMobile()"><span class="mobile-link-icon">💶</span>Tarifs</a>
+    <a href="#process" class="mobile-link" onclick="toggleMobile()"><span class="mobile-link-icon">🔄</span>Notre Méthode</a>
+    <a href="#faq" class="mobile-link" onclick="toggleMobile()"><span class="mobile-link-icon">❓</span>FAQ</a>
+    <a href="#cta" class="mobile-link" onclick="toggleMobile()"><span class="mobile-link-icon">📞</span>Contact</a>
+  </div>
+  <div class="mobile-footer">
+    <a href="#cta" class="btn-gold" style="width:100%;justify-content:center;" onclick="toggleMobile()">
+      Demander un RDV gratuit →
+    </a>
+    <p style="font-size:.72rem;color:rgba(255,255,255,.3);text-align:center;margin-top:.8rem;">
+      47 rue de la Paix · Paris 2ème · 01 43 52 61 00
+    </p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     DOTS DE NAVIGATION LATÉRAUX
+════════════════════════════════════════ -->
+<nav class="nav-sections-track" aria-label="Navigation rapide">
+  <a href="#hero"     class="nav-dot active" data-dot="hero">    <span class="nav-dot-label">Accueil</span>  <span class="nav-dot-pip"></span></a>
+  <a href="#about"    class="nav-dot" data-dot="about">          <span class="nav-dot-label">Cabinet</span>  <span class="nav-dot-pip"></span></a>
+  <a href="#services" class="nav-dot" data-dot="services">       <span class="nav-dot-label">Services</span> <span class="nav-dot-pip"></span></a>
+  <a href="#team"     class="nav-dot" data-dot="team">           <span class="nav-dot-label">Équipe</span>   <span class="nav-dot-pip"></span></a>
+  <a href="#tarifs"   class="nav-dot" data-dot="tarifs">         <span class="nav-dot-label">Tarifs</span>   <span class="nav-dot-pip"></span></a>
+  <a href="#process"  class="nav-dot" data-dot="process">        <span class="nav-dot-label">Méthode</span>  <span class="nav-dot-pip"></span></a>
+  <a href="#faq"      class="nav-dot" data-dot="faq">            <span class="nav-dot-label">FAQ</span>      <span class="nav-dot-pip"></span></a>
+  <a href="#cta"      class="nav-dot" data-dot="cta">            <span class="nav-dot-label">Contact</span>  <span class="nav-dot-pip"></span></a>
+</nav>
+
+<!-- ════════════════════════════════════════
+     MAIN CONTENT
+════════════════════════════════════════ -->
+<main id="main">
+
+  <!-- ── HERO ─────────────────────────────── -->
+  <section id="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <div class="hero-badge fade-up">Cabinet certifié Ordre des Experts-Comptables · Paris</div>
+          <h2 class="fade-up delay-1">
+            La comptabilité qui<br>
+            <em>libère votre énergie</em><br>
+            d'entrepreneur
+          </h2>
+          <p class="fade-up delay-2">
+            Depuis 2009, Mercier &amp; Associés accompagne les dirigeants, indépendants et PME parisiennes avec rigueur, réactivité et une vision stratégique au-delà des chiffres.
+          </p>
+          <div class="hero-actions fade-up delay-3">
+            <a href="#cta" class="btn-gold">Demander un RDV gratuit ↗</a>
+            <a href="#services" class="btn-outline-white">Nos prestations</a>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;">
+            <div class="hero-stat"><div class="number">320+</div><div class="label">Clients accompagnés</div></div>
+            <div class="hero-stat"><div class="number">15</div><div class="label">Ans d'expérience</div></div>
+            <div class="hero-stat"><div class="number">98%</div><div class="label">Taux de satisfaction</div></div>
+            <div class="hero-stat"><div class="number">&lt;24h</div><div class="label">Délai de réponse</div></div>
+          </div>
+          <div class="hero-expert">
+            <div class="hero-expert-avatar">JM</div>
+            <div class="hero-expert-info">
+              <strong>Julien Mercier</strong>
+              <span>Expert-Comptable Associé</span>
+              <div class="stars">★★★★★</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TRUST BAR ────────────────────────── -->
+  <div id="trust">
+    <div class="container">
+      <div class="trust-inner">
+        <div class="trust-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          Membre de l'Ordre des Experts-Comptables
+        </div>
+        <div class="trust-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Secret professionnel garanti
+        </div>
+        <div class="trust-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          Assurance RCP incluse
+        </div>
+        <div class="trust-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Réponse sous 24h ouvré
+        </div>
+        <div class="trust-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Interlocuteur dédié unique
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ABOUT ─────────────────────────────── -->
+  <section id="about" class="section">
+    <div class="container">
+      <div class="about-grid">
+        <div style="position:relative;">
+          <div class="about-main-img">
+            <div style="position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(255,255,255,.02) 0px,rgba(255,255,255,.02) 1px,transparent 1px,transparent 60px);"></div>
+            <div class="about-img-content">
+              <div style="position:absolute;top:2rem;right:2rem;width:80px;height:80px;background:linear-gradient(135deg,var(--gold),var(--gold2));border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+                <span style="font-family:var(--font-display);font-size:1.5rem;font-weight:700;color:var(--navy);line-height:1;">2009</span>
+                <span style="font-size:.5rem;font-weight:600;color:var(--navy);opacity:.7;text-transform:uppercase;letter-spacing:.05em;">Fondé</span>
+              </div>
+              <div class="about-img-caption">
+                <strong>47, rue de la Paix — Paris 2ème</strong>
+                <span>Notre cabinet au cœur de la capitale</span>
+              </div>
+            </div>
+          </div>
+          <div class="about-float-card">
+            <div class="num">320+</div>
+            <div class="txt">clients satisfaits<br>depuis 15 ans</div>
+          </div>
+        </div>
+        <div style="padding-top:1rem;">
+          <div class="tag">Notre histoire</div>
+          <div class="gold-line"></div>
+          <h2 style="font-size:2.5rem;color:var(--navy);margin-bottom:1.5rem;">
+            Un cabinet fondé sur la confiance,<br>
+            <em style="color:var(--gold);">pérennisé par les résultats</em>
+          </h2>
+          <p style="color:var(--muted);font-size:.95rem;margin-bottom:2rem;">
+            Fondé en 2009 par <strong>Julien Mercier</strong>, Expert-Comptable diplômé de Paris-Dauphine, notre cabinet accompagne aujourd'hui plus de 320 clients — des indépendants aux PME de 50 salariés — avec une même conviction : la comptabilité doit être un levier de croissance, pas une contrainte.
+          </p>
+          <p style="color:var(--muted);font-size:.95rem;margin-bottom:2.5rem;">
+            Structurée autour d'une équipe de 8 collaborateurs spécialisés, la société exerce depuis ses bureaux du 2ème arrondissement de Paris et intervient sur toute l'Île-de-France.
+          </p>
+          <div class="value-item">
+            <div class="value-icon">🎯</div>
+            <div><h4>Précision absolue</h4><p>Chaque dossier est révisé en double, chaque déclaration vérifiée avant envoi. Zéro pénalité pour nos clients depuis 3 ans consécutifs.</p></div>
+          </div>
+          <div class="value-item">
+            <div class="value-icon">💬</div>
+            <div><h4>Transparence totale</h4><p>Aucune surprise sur votre facture. Nos honoraires sont fixés au départ et ne bougent pas sauf si votre périmètre évolue.</p></div>
+          </div>
+          <div class="value-item">
+            <div class="value-icon">🚀</div>
+            <div><h4>Vision entrepreneuriale</h4><p>Nos experts sont eux-mêmes passés par la création d'entreprise. Ils parlent votre langue et comprennent vos enjeux réels.</p></div>
+          </div>
+          <div style="margin-top:2rem;"><a href="#cta" class="btn-gold">Rencontrez notre équipe →</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SERVICES ──────────────────────────── -->
+  <section id="services" class="section">
+    <div class="container">
+      <div style="text-align:center;margin-bottom:4rem;">
+        <div class="tag" style="display:inline-block;">Nos prestations</div>
+        <div class="gold-line" style="margin:0 auto 1.5rem;"></div>
+        <h2 style="font-size:2.8rem;color:var(--navy);margin-bottom:1rem;">
+          Tout ce dont votre entreprise a besoin,<br>
+          <em style="color:var(--gold);">réuni au même endroit</em>
+        </h2>
+        <p style="color:var(--muted);max-width:560px;margin:0 auto;font-size:.95rem;">
+          De la tenue comptable quotidienne aux stratégies fiscales avancées, nos experts prennent en charge l'intégralité de vos obligations avec précision et pro-activité.
+        </p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card"><div class="service-number">01</div><div class="service-icon-wrap">📒</div><h3>Comptabilité générale</h3><p>Tenue rigoureuse de votre comptabilité au quotidien, avec reporting mensuel lisible et accessible en ligne.</p><ul class="service-list"><li>Saisie et lettrage des écritures</li><li>Déclarations de TVA (mensuelle/trimestrielle)</li><li>Révision des comptes</li><li>Bilan annuel + liasse fiscale</li></ul></div>
+        <div class="service-card"><div class="service-number">02</div><div class="service-icon-wrap">📊</div><h3>Fiscalité &amp; Optimisation</h3><p>Réduction légale de votre charge fiscale grâce à une veille constante et des stratégies sur mesure.</p><ul class="service-list"><li>IS, IR, CFE, CVAE</li><li>Optimisation rémunération dirigeant</li><li>Intégration fiscale de groupe</li><li>Gestion des déficits reportables</li></ul></div>
+        <div class="service-card"><div class="service-number">03</div><div class="service-icon-wrap">👥</div><h3>Gestion de la paie</h3><p>Externalisation complète de votre paie — fiable, conforme, et déchargée de toute complexité pour vous.</p><ul class="service-list"><li>Bulletins dématérialisés</li><li>DSN &amp; DPAE automatisées</li><li>Gestion des entrées/sorties</li><li>Conseil droit social</li></ul></div>
+        <div class="service-card"><div class="service-number">04</div><div class="service-icon-wrap">🏗️</div><h3>Création &amp; Reprise d'entreprise</h3><p>Vous lancez ou reprenez ? Nous sécurisons chaque étape juridique, fiscale et financière de votre projet.</p><ul class="service-list"><li>Choix de la forme juridique</li><li>Immatriculation &amp; statuts</li><li>Business plan &amp; prévisionnel</li><li>Recherche de financement</li></ul></div>
+        <div class="service-card"><div class="service-number">05</div><div class="service-icon-wrap">📈</div><h3>Pilotage &amp; Tableau de bord</h3><p>Des outils de suivi clairs et visuels pour prendre les bonnes décisions au bon moment, sans expertise comptable requise.</p><ul class="service-list"><li>Tableau de bord mensuel</li><li>Analyse de trésorerie</li><li>Prévisionnels et projections</li><li>Points stratégiques trimestriels</li></ul></div>
+        <div class="service-card"><div class="service-number">06</div><div class="service-icon-wrap">⚖️</div><h3>Audit &amp; Commissariat</h3><p>Audit légal ou contractuel mené par nos commissaires aux comptes pour une crédibilité maximale auprès de vos partenaires.</p><ul class="service-list"><li>Commissariat aux comptes</li><li>Audit d'acquisition (due diligence)</li><li>Certification des comptes</li><li>Rapport de gestion</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TEAM ───────────────────────────────── -->
+  <section id="team" class="section">
+    <div class="container">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3.5rem;gap:2rem;flex-wrap:wrap;">
+        <div>
+          <div class="tag">L'équipe</div>
+          <div class="gold-line"></div>
+          <h2 style="font-size:2.5rem;color:var(--navy);">Des experts dédiés<br><em style="color:var(--gold);">à votre réussite</em></h2>
+        </div>
+        <p style="color:var(--muted);max-width:380px;font-size:.9rem;">8 collaborateurs spécialisés, chacun expert dans son domaine, travaillant ensemble sur votre dossier de façon cohérente et coordonnée.</p>
+      </div>
+      <div class="team-grid">
+        <div class="team-card"><div class="team-avatar" style="background:linear-gradient(135deg,#1A2E44,#0D1B2A);">JM</div><div class="team-body"><div class="role">Expert-Comptable Fondateur</div><h4>Julien Mercier</h4><p>15 ans d'expérience. Spécialiste des restructurations et de l'optimisation fiscale pour les groupes familiaux.</p><div class="expertise"><span>Fiscalité</span><span>Groupes</span><span>M&amp;A</span></div></div></div>
+        <div class="team-card"><div class="team-avatar" style="background:linear-gradient(135deg,#C9A84C,#E8C97A);">SL</div><div class="team-body"><div class="role">Expert-Comptable Associée</div><h4>Sophie Laurent</h4><p>Diplômée de l'ESCA. Référente professions libérales &amp; secteur médical. Co-associée depuis 2014.</p><div class="expertise"><span>Libéraux</span><span>Médical</span><span>SCM</span></div></div></div>
+        <div class="team-card"><div class="team-avatar" style="background:linear-gradient(135deg,#2d5f8d,#1A3A5C);">TD</div><div class="team-body"><div class="role">Responsable Paie &amp; Social</div><h4>Thomas Dupont</h4><p>Expert en droit social et gestion de la paie multi-conventions. Gère plus de 180 bulletins mensuels.</p><div class="expertise"><span>Paie</span><span>DSN</span><span>Droit social</span></div></div></div>
+        <div class="team-card"><div class="team-avatar" style="background:linear-gradient(135deg,#5a4e3a,#8a7355);">MC</div><div class="team-body"><div class="role">Responsable Comptabilité</div><h4>Marie Collet</h4><p>10 ans de tenue comptable multi-secteurs. Référente logiciels de gestion (Sage, Pennylane, QuickBooks).</p><div class="expertise"><span>Sage</span><span>Pennylane</span><span>TVA</span></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TARIFS ─────────────────────────────── -->
+  <section id="tarifs" class="section">
+    <div class="container">
+      <div style="text-align:center;margin-bottom:4rem;">
+        <div class="tag" style="display:inline-block;">Tarifs transparents</div>
+        <div class="gold-line" style="margin:0 auto 1.5rem;"></div>
+        <h2 style="font-size:2.8rem;color:var(--navy);margin-bottom:1rem;">Des forfaits clairs,<br><em style="color:var(--gold);">sans mauvaise surprise</em></h2>
+        <p style="color:var(--muted);max-width:520px;margin:0 auto;font-size:.92rem;">Nos honoraires sont définis au départ et mentionnés dans votre lettre de mission. Tous les tarifs sont HT et adaptables à la taille de votre structure.</p>
+      </div>
+      <div class="tarifs-grid">
+        <div class="tarif-card">
+          <div class="tarif-header"><h3>Essentiel</h3><p>Idéal pour les auto-entrepreneurs et freelances</p></div>
+          <div class="tarif-price"><div><div class="amount">90€</div><span class="note">/ mois · engagement 12 mois</span></div><span class="period">HT</span></div>
+          <div class="tarif-features">
+            <div class="tarif-feature"><span class="check">✓</span>Tenue comptable mensuelle</div>
+            <div class="tarif-feature"><span class="check">✓</span>Déclarations TVA trimestrielle</div>
+            <div class="tarif-feature"><span class="check">✓</span>Bilan annuel + liasse fiscale</div>
+            <div class="tarif-feature"><span class="check">✓</span>Espace client en ligne</div>
+            <div class="tarif-feature muted"><span class="cross">✕</span>Gestion de la paie</div>
+            <div class="tarif-feature muted"><span class="cross">✕</span>Tableau de bord mensuel</div>
+            <div class="tarif-feature muted"><span class="cross">✕</span>Points stratégiques trimestriels</div>
+          </div>
+          <div class="tarif-footer"><a href="#cta" class="btn-outline" style="width:100%;justify-content:center;">Démarrer →</a></div>
+        </div>
+        <div class="tarif-card featured">
+          <div class="tarif-header"><div class="tarif-badge">⭐ Le plus choisi</div><h3>Pro</h3><p>Pour les TPE et artisans en croissance</p></div>
+          <div class="tarif-price"><div><div class="amount">240€</div><span class="note">/ mois · engagement 12 mois</span></div><span class="period">HT</span></div>
+          <div class="tarif-features">
+            <div class="tarif-feature"><span class="check">✓</span>Tenue comptable mensuelle</div>
+            <div class="tarif-feature"><span class="check">✓</span>Déclarations TVA mensuelles</div>
+            <div class="tarif-feature"><span class="check">✓</span>Bilan annuel + liasse fiscale</div>
+            <div class="tarif-feature"><span class="check">✓</span>Paie jusqu'à 5 salariés</div>
+            <div class="tarif-feature"><span class="check">✓</span>Tableau de bord mensuel</div>
+            <div class="tarif-feature"><span class="check">✓</span>Optimisation fiscale incluse</div>
+            <div class="tarif-feature muted"><span class="cross">✕</span>Points stratégiques trimestriels</div>
+          </div>
+          <div class="tarif-footer"><a href="#cta" class="btn-gold" style="width:100%;justify-content:center;">Choisir ce forfait →</a></div>
+        </div>
+        <div class="tarif-card">
+          <div class="tarif-header"><h3>Premium</h3><p>Pour les PME avec enjeux complexes</p></div>
+          <div class="tarif-price"><div><div class="amount">490€</div><span class="note">/ mois · sur devis au-delà</span></div><span class="period">HT</span></div>
+          <div class="tarif-features">
+            <div class="tarif-feature"><span class="check">✓</span>Toutes les fonctionnalités Pro</div>
+            <div class="tarif-feature"><span class="check">✓</span>Paie illimitée (tous salariés)</div>
+            <div class="tarif-feature"><span class="check">✓</span>Points stratégiques trimestriels</div>
+            <div class="tarif-feature"><span class="check">✓</span>Prévisionnel &amp; business plan</div>
+            <div class="tarif-feature"><span class="check">✓</span>Interlocuteur expert dédié</div>
+            <div class="tarif-feature"><span class="check">✓</span>Accompagnement juridique</div>
+            <div class="tarif-feature"><span class="check">✓</span>Audit &amp; commissariat (option)</div>
+          </div>
+          <div class="tarif-footer"><a href="#cta" class="btn-outline" style="width:100%;justify-content:center;">Demander un devis →</a></div>
+        </div>
+      </div>
+      <div style="background:var(--white);border-radius:14px;padding:1.5rem 2rem;margin-top:2rem;border:1px solid var(--fog);display:flex;align-items:center;gap:1rem;">
+        <span style="font-size:1.5rem;">💡</span>
+        <div>
+          <strong style="font-size:.9rem;color:var(--navy);">Besoin d'un devis personnalisé ?</strong>
+          <p style="font-size:.82rem;color:var(--muted);margin-top:.2rem;">Chaque dossier est unique. Nos tarifs s'adaptent au volume, à la complexité et au secteur d'activité. Contactez-nous pour une estimation gratuite sous 24h.</p>
+        </div>
+        <a href="#cta" class="btn-gold" style="white-space:nowrap;flex-shrink:0;">Devis gratuit →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROCESS ────────────────────────────── -->
+  <section id="process" class="section">
+    <div class="container">
+      <div class="process-head" style="text-align:center;margin-bottom:5rem;">
+        <div class="tag" style="display:inline-block;color:var(--gold2);border-color:rgba(201,168,76,.3);">Notre méthode</div>
+        <div class="gold-line" style="margin:0 auto 1.5rem;"></div>
+        <h2 style="font-size:2.8rem;margin-bottom:1rem;">Comment on travaille</h2>
+        <p>Simple, transparent, efficace — de votre premier contact à votre bilan annuel.</p>
+      </div>
+      <div class="process-steps">
+        <div class="process-step"><div class="process-step-num">1</div><h4>Rendez-vous découverte</h4><p>Appel ou réunion de 30 min pour comprendre votre activité, votre situation actuelle et vos attentes. Gratuit, sans engagement.</p></div>
+        <div class="process-step"><div class="process-step-num">2</div><h4>Lettre de mission</h4><p>Nous formalisons les prestations choisies, le calendrier, et les honoraires fixes. Tout est écrit, clair, et signé avant de commencer.</p></div>
+        <div class="process-step"><div class="process-step-num">3</div><h4>Onboarding guidé</h4><p>Récupération de vos documents, mise en place des outils numériques et formation rapide à votre espace client. Délai : 48h maximum.</p></div>
+        <div class="process-step"><div class="process-step-num">4</div><h4>Suivi continu</h4><p>Votre expert produit, déclare, conseille. Vous recevez vos reportings et nous sommes joignables à tout moment par téléphone ou messagerie.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ───────────────────────────────── -->
+  <section id="faq" class="section">
+    <div class="container">
+      <div class="faq-grid">
+        <div class="faq-sidebar">
+          <div class="tag">FAQ</div>
+          <div class="gold-line"></div>
+          <h2>Questions fréquentes</h2>
+          <p>Vous avez d'autres questions ? Notre équipe répond sous 24h à toute demande par email.</p>
+          <a href="#cta" class="btn-gold" style="margin-top:.5rem;">Poser ma question →</a>
+        </div>
+        <div>
+          <details open><summary>Quand dois-je faire appel à un expert-comptable ?<span class="faq-icon">+</span></summary><p class="faq-answer">Dès la création de votre structure, idéalement. Même en tant qu'auto-entrepreneur, un accompagnement permet de faire les bons choix dès le départ (forme juridique, régime fiscal, gestion de TVA). Plus tôt vous consultez, plus vous économisez sur le long terme.</p></details>
+          <details><summary>Puis-je changer de comptable en cours d'année ?<span class="faq-icon">+</span></summary><p class="faq-answer">Oui, à tout moment. Nous prenons en charge la reprise de votre dossier auprès de votre comptable précédent, en respectant les délais légaux. La transition est totalement transparente pour vous et ne perturbera pas vos obligations fiscales.</p></details>
+          <details><summary>Comment transmettez-vous les documents ?<span class="faq-icon">+</span></summary><p class="faq-answer">Via notre espace client sécurisé, accessible 24h/24. Vous déposez vos factures, relevés bancaires et notes de frais en quelques clics — même depuis votre smartphone. Nous nous occupons du reste.</p></details>
+          <details><summary>Intervenez-vous en cas de contrôle fiscal ?<span class="faq-icon">+</span></summary><p class="faq-answer">Absolument. Nous vous représentons et vous accompagnons lors de tout contrôle fiscal ou social. Notre rôle est d'assurer l'interface avec l'administration et de défendre vos intérêts avec les arguments juridiques appropriés.</p></details>
+          <details><summary>Vos tarifs sont-ils fixes ou peuvent-ils évoluer ?<span class="faq-icon">+</span></summary><p class="faq-answer">Les honoraires sont fixés pour la durée de votre lettre de mission (12 mois). Une révision peut être proposée à l'échéance si le périmètre a évolué (embauches supplémentaires, nouvelle activité…). Aucune augmentation surprise en cours de mission.</p></details>
+          <details><summary>Travaillez-vous avec des entreprises hors Paris ?<span class="faq-icon">+</span></summary><p class="faq-answer">Oui. Grâce à nos outils 100% dématérialisés, nous accompagnons des clients dans toute la France. Les réunions de bilan peuvent se tenir en visioconférence. Environ 30% de nos clients sont hors Île-de-France.</p></details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA FINAL ──────────────────────────── -->
+  <section id="cta" class="section">
+    <div class="container">
+      <div class="cta-inner">
+        <div>
+          <div class="tag" style="color:var(--gold2);border-color:rgba(201,168,76,.3);">Passons à l'action</div>
+          <div class="gold-line"></div>
+          <h2>Votre premier rendez-vous<br>est <em>offert &amp; sans engagement</em></h2>
+          <p style="margin-top:1rem;">30 minutes avec un expert pour analyser votre situation, répondre à toutes vos questions et vous proposer une solution adaptée. Sans pression, sans jargon.</p>
+          <div style="display:flex;gap:1rem;margin-top:2rem;flex-wrap:wrap;">
+            <a href="tel:0143526100" class="btn-gold">📞 01 43 52 61 00</a>
+            <a href="mailto:contact@mercier-associes.fr" class="btn-outline-white">✉️ Par email</a>
+          </div>
+          <p style="font-size:.78rem;color:rgba(255,255,255,.35);margin-top:1.2rem;">Du lundi au vendredi · 9h00 – 18h30 · Réponse email sous 24h ouvrées</p>
+        </div>
+        <div class="cta-box">
+          <p>Appelez directement</p>
+          <div class="phone">01 43 52 61 00</div>
+          <a href="#" style="display:block;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--navy);padding:.8rem 1.5rem;border-radius:10px;font-weight:700;font-size:.88rem;text-decoration:none;margin-bottom:.75rem;transition:opacity .2s;" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+            📅 Réserver un créneau en ligne
+          </a>
+          <a href="mailto:contact@mercier-associes.fr" style="display:block;background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);padding:.65rem 1rem;border-radius:10px;font-size:.82rem;text-decoration:none;border:1px solid rgba(255,255,255,.12);">
+            ✉️ contact@mercier-associes.fr
+          </a>
+          <p style="font-size:.7rem;color:rgba(255,255,255,.3);margin-top:.8rem;">47 rue de la Paix · Paris 2ème</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────── -->
+  <footer id="footer">
+    <div class="container">
+      <div class="footer-main">
+        <div class="footer-brand">
+          <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;">
+            <div style="width:36px;height:36px;background:linear-gradient(135deg,var(--gold),var(--gold2));border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:1.1rem;color:var(--navy);">M</div>
+            <h2>Mercier &amp; Associés</h2>
+          </div>
+          <p>Cabinet d'expertise comptable et de conseil fondé en 2009 à Paris. Membre de l'Ordre des Experts-Comptables de Paris Île-de-France.</p>
+          <div class="footer-orias">
+            <span style="color:rgba(255,255,255,.3);font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;display:block;margin-bottom:.25rem;">Inscription professionnelle</span>
+            <span style="color:rgba(255,255,255,.55);font-size:.75rem;">N° OEC : 75-1234 · SIRET : 502 687 131 00027</span>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <a href="#services">Comptabilité générale</a>
+          <a href="#services">Optimisation fiscale</a>
+          <a href="#services">Gestion de la paie</a>
+          <a href="#services">Création d'entreprise</a>
+          <a href="#services">Tableau de bord</a>
+          <a href="#services">Audit &amp; Commissariat</a>
+        </div>
+        <div class="footer-col">
+          <h4>Cabinet</h4>
+          <a href="#about">Notre histoire</a>
+          <a href="#team">L'équipe</a>
+          <a href="#tarifs">Tarifs</a>
+          <a href="#process">Notre méthode</a>
+          <a href="#faq">FAQ</a>
+        </div>
+        <div class="footer-col">
+          <h4>Contact &amp; Légal</h4>
+          <a href="#">47 rue de la Paix, 75002 Paris</a>
+          <a href="tel:0143526100">01 43 52 61 00</a>
+          <a href="mailto:contact@mercier-associes.fr">contact@mercier-associes.fr</a>
+          <a href="#" style="margin-top:.8rem;">Mentions légales</a>
+          <a href="#">Politique de confidentialité</a>
+          <a href="#">CGV</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 Mercier &amp; Associés — Tous droits réservés</span>
+        <div style="display:flex;gap:1rem;align-items:center;">
+          <span class="footer-demo-badge">Site de démonstration</span>
+          <span style="font-size:.7rem;">Création web par <a href="#" style="color:var(--gold2);">votre développeur</a></span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</main>
+
+<!-- ════════════════════════════════════════
+     SCRIPTS
+════════════════════════════════════════ -->
+<script>
+  const navbar  = document.getElementById('navbar');
+  const progress = document.getElementById('scroll-progress');
+  const burger  = document.getElementById('burger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const navLinks = document.querySelectorAll('.nav-link[data-section]');
+  const dots    = document.querySelectorAll('.nav-dot[data-dot]');
+
+  /* ── Navbar scroll behavior ── */
+  let lastScroll = 0;
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    const docH = document.documentElement.scrollHeight - window.innerHeight;
+
+    /* Barre de progression */
+    progress.style.width = (scrollY / docH * 100) + '%';
+
+    /* Transparent → Scrolled */
+    if (scrollY > 60) {
+      navbar.classList.remove('transparent');
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+      navbar.classList.add('transparent');
+    }
+
+    lastScroll = scrollY;
+  });
+
+  /* ── Mobile menu toggle ── */
+  function toggleMobile() {
+    const isOpen = mobileMenu.classList.toggle('open');
+    burger.classList.toggle('open', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  }
+
+  /* ── Active section tracking (navbar + dots) ── */
+  const sections = document.querySelectorAll('section[id]');
+
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const id = entry.target.id;
+
+      /* Navbar links */
+      navLinks.forEach(l => {
+        l.classList.toggle('active', l.dataset.section === id);
+      });
+
+      /* Side dots */
+      dots.forEach(d => {
+        d.classList.toggle('active', d.dataset.dot === id);
+      });
+    });
+  }, { threshold: 0.35, rootMargin: '-80px 0px -30% 0px' });
+
+  sections.forEach(s => sectionObserver.observe(s));
+
+  /* ── Scroll animations ── */
+  const animObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.animationPlayState = 'running';
+        entry.target.style.opacity = '';
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.service-card, .team-card, .tarif-card, .value-item, .process-step').forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.animation = 'fadeUp 0.6s ease-out forwards paused';
+    animObs.observe(el);
+  });
+
+  /* Stagger */
+  document.querySelectorAll('.services-grid .service-card').forEach((el,i) => el.style.animationDelay = `${i*.08}s`);
+  document.querySelectorAll('.tarifs-grid .tarif-card').forEach((el,i) => el.style.animationDelay = `${i*.1}s`);
+  document.querySelectorAll('.team-grid .team-card').forEach((el,i) => el.style.animationDelay = `${i*.08}s`);
+
+  /* ── Fermer les menus en cliquant ailleurs ── */
+  document.addEventListener('click', (e) => {
+    if (!mobileMenu.contains(e.target) && !burger.contains(e.target) && mobileMenu.classList.contains('open')) {
+      toggleMobile();
+    }
+  });
+</script>
+
+</body>
+</html>
